@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<style>
+p {
+  transition: all linear 0.5s;
+  background-color: lightblue;
+  height: 100px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+</style>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+
+<!-- appel au menu -->
+<div ng-include="'menu.html'"></div>
+
+<div>
+NOM: <input name="userName" ng-model="nom">
+<input type="button" value="Add" ng-click="add('nom')">
+
+NOM: <input ng-model="name">
+<input type="button" value="Modify" ng-click="modify('name')">
+
+Recherche par mot cle: <input ng-model="MotCle">
+
+<h4>You entered: {{nom}}</h4>
+
+<h1 style="color: red"> {{message}}</h1>
+
+<table width="100%">
+    <tr ng-repeat="x in personnes | filter : MotCle">
+        <td>{{x.nom}}</td>
+        <td> <a class="nav-link" ng-click="edit(x)"> Modifier </a></td> 
+        <td> <a class="nav-link" ng-click="delete(x)"> Supprimer </a></td> 
+    </tr>
+</table>
+
+
+<h3> List of our users </h3>
+<input ng-model="search">
+<table width="100%">
+    <tr ng-repeat="x in users | filter:search">
+        <td>{{x.idCategorie}}</td>
+        <td>{{x.nom}}</td>
+    </tr>
+</table>
+</div>
+
+<h1>Hide the DIV: <input type="checkbox" ng-model="myCheck"></h1>
+<p ng-hide="myCheck"></p>
+
+<h1>Show the DIV: <input type="checkbox" ng-model="myCheck1"></h1>
+<p ng-show="myCheck1"></p>
+
+
+
+
+<div class="row">
+	<div class="col-md-4">
+		My favorite topic is:
+		<ul class="nav nav-pills nav-stacked" ng-model="myVar">
+			<li><a href="#" ng-click="myVar= 'dogs'">Action 1</a></li>
+			<li><a href="#" ng-click="myVar= 'tuts'">Action 2</a></li>
+			<li><a href="#" ng-click="myVar= 'cars'">Action 3</a></li>
+		</ul>
+	</div>
+
+	<div class="col-md-4">
+		<div ng-switch="myVar">
+		  <div ng-switch-when="dogs">
+			 <h1>Dogs</h1>
+			 <p>Welcome to a world of dogs.</p>
+		  </div>
+		  <div ng-switch-when="tuts">
+			 <h1>Tutorials</h1>
+			 <p>Learn from examples.</p>
+		  </div>
+		  <div ng-switch-when="cars">
+			 <h1>Cars</h1>
+			 <p>Read about cars.</p>
+		  </div>
+		  <div ng-switch-default>
+			 <h1>Switch</h1>
+			 <p>Select topic from the dropdown, to switch the content of this DIV.</p>
+		  </div>
+		</div>
+	</div>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+
+$http.get("menu.html")
+    .then(function(response) {
+        $scope.menu = response.data;
+    });
+
+    $scope.personnes = [
+	{id: 1, nom: "Tamskint Farid"},
+	{id: 2, nom: "Tamskint Imad"},
+	{id: 3, nom: "Tamskint Hicham"}
+	];
+	
+	// function to add personnes in array
+	$scope.add = function(nom) {
+	console.log($scope.nom);
+	
+	var exists= 0;
+	for(var i = $scope.personnes.length - 1; i >= 0; i--){
+        if($scope.personnes[i].nom == $scope.nom){
+            exists= 1;
+			$scope.message= "This name is already exists";
+        }
+		if (!$scope.nom) {
+			$scope.message= "Empty name";
+			return;
+		}
+    }
+	if(exists==0){
+		$scope.personnes.push({
+            nom: $scope.nom,
+        });
+	}
+        // Clear input fields after push
+        $scope.nom = "";
+	}
+	
+	// function to modify a personne
+	$scope.edit = function(x) {
+	console.log(x.nom);
+	
+		for(var i = $scope.personnes.length - 1; i >= 0; i--){
+			if($scope.personnes[i].nom == x.nom){
+				$scope.name = x.nom;
+			}
+		}
+	}
+	
+	// function to delete a personne
+	$scope.delete = function(x) {
+	console.log(x.nom);
+	alert("Voulez-vous supprimer cet enregistrement!?");
+		for(var i = $scope.personnes.length - 1; i >= 0; i--){
+			if($scope.personnes[i].nom == x.nom){
+				$scope.personnes.splice(i,1);
+			}
+		}
+	}
+	
+	var url = "http://localhost:8080/categories";
+
+	$http.get(url)
+		.success(function(data){
+			console.log(data);
+			$scope.users= data;
+		}
+		, function myError(data) {
+        $scope.myWelcome = data.statusText;
+    });
+	
+	
+});
+</script>
+
+</body>
+</html>
