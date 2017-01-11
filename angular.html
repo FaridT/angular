@@ -42,13 +42,14 @@ Recherche par mot cle: <input ng-model="MotCle">
     </tr>
 </table>
 
-
-<h3> List of our users </h3>
-<input ng-model="search">
-<table width="100%">
+<div style="margin-left:20px">
+	<h3> List of our Users </h3>
+	Search<input ng-model="search">
+</div>
+<table style="text-align:center" width="50%">
     <tr ng-repeat="x in users | filter:search">
-        <td>{{x.idCategorie}}</td>
-        <td>{{x.nom}}</td>
+        <td>{{x.Name}}</td>
+        <td>{{x.Country}}</td>
     </tr>
 </table>
 </div>
@@ -155,12 +156,13 @@ $http.get("menu.html")
 		}
 	}
 	
-	var url = "http://localhost:8080/categories";
+	<!-- var url = "http://localhost:8080/categories"; -->
+	var url = "http://www.w3schools.com/angular/customers.php";
 
 	$http.get(url)
 		.success(function(data){
-			console.log(data);
-			$scope.users= data;
+			console.log(data.records);
+			$scope.users= data.records;
 		}
 		, function myError(data) {
         $scope.myWelcome = data.statusText;
