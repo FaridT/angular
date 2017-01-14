@@ -1,0 +1,21 @@
+.example-form {
+  width: 500px;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+p {
+  transition: all linear 0.5s;
+  background-color: lightblue;
+  height: 100px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.row{
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+}

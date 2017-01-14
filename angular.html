@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html>
+<head>
 <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+<script src="js/jquery.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<!-- <script src="node_modules/bootstrap/js/dropdown.js"></script>
+<script src="node_modules/bootstrap/js/collapse.js"></script> -->
 
-<style>
-p {
-  transition: all linear 0.5s;
-  background-color: lightblue;
-  height: 100px;
-  width: 100%;
-  position: relative;
-  top: 0;
-  left: 0;
-}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typescript/2.0.3/typescript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.6.25/zone.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.38/system.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
 
-</style>
+<!-- Load Bundle from Asset Host -->
+<script src="https://plnkr-test.firebaseapp.com/components.bundle.js?sha=bf44c16"></script>
+
+<!-- Configure SystemJS -->
+<script src="systemjs.config.js"></script>
+
+<script>
+  System
+    .import('main.ts')
+    .catch(console.error.bind(console));
+</script>
+
+<!-- Load the Angular Material 2 stylesheet -->
+<link href="https://unpkg.com/@angular/material/core/theming/prebuilt/indigo-pink.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
 
 <body ng-app="myApp" ng-controller="myCtrl">
 
@@ -33,14 +51,16 @@ Recherche par mot cle: <input ng-model="MotCle"> -->
 <h4>You entered: {{nom}}</h4>
 
 <h1 style="color: red"> {{message}}</h1>
-
-<table width="100%">
+<div class="row" style="margin-left: 0px; margin-right: 0px">
+<div class="col-md-4"></div>
+<table class="col-md-4">
     <tr ng-repeat="x in personnes | filter : MotCle">
         <td>{{x.nom}}</td>
         <td> <a class="nav-link" ng-click="edit(x)"> Modifier </a></td> 
         <td> <a class="nav-link" ng-click="delete(x)"> Supprimer </a></td> 
     </tr>
 </table>
+</div>
 
 <div style="margin-left:20px">
 	<h3> List of our Users </h3>
@@ -63,33 +83,36 @@ Recherche par mot cle: <input ng-model="MotCle"> -->
 
 
 
-<div class="row">
+<div class="row" style="margin-left: 0px; margin-right: 0px">
 	<div class="col-md-4">
 		My favorite topic is:
 		<ul class="nav nav-pills nav-stacked" ng-model="myVar">
-			<li><a href="#" ng-click="myVar= 'dogs'">Action 1</a></li>
-			<li><a href="#" ng-click="myVar= 'tuts'">Action 2</a></li>
-			<li><a href="#" ng-click="myVar= 'cars'">Action 3</a></li>
+			<li><a href="#" ng-click="myVar= 'insciption'">Insciption</a></li>
+			<li><a href="#" ng-click="myVar= 'connection'">Connection</a></li>
+			<li><a href="#" ng-click="myVar= 'tuts'">Tutorials</a></li>
 		</ul>
 	</div>
 
 	<div class="col-md-4">
 		<div ng-switch="myVar">
-		  <div ng-switch-when="dogs">
-			 <h1>Dogs</h1>
-			 <p>Welcome to a world of dogs.</p>
+		  <div ng-switch-when="insciption">
+			<h1>Insciption</h1>
+			<input-form-example>Loading Material Docs example...</input-form-example>
 		  </div>
+		  
+		  <div ng-switch-when="connection">
+			 <h1>Connection to the service</h1>
+			 <div>Form to fill.</div>
+		  </div>
+		  
 		  <div ng-switch-when="tuts">
 			 <h1>Tutorials</h1>
-			 <p>Learn from examples.</p>
+			 <div>Learn from examples.</div>
 		  </div>
-		  <div ng-switch-when="cars">
-			 <h1>Cars</h1>
-			 <p>Read about cars.</p>
-		  </div>
+		  
 		  <div ng-switch-default>
 			 <h1>Switch</h1>
-			 <p>Select topic from the dropdown, to switch the content of this DIV.</p>
+			 <div>Select topic from the dropdown, to switch the content of this DIV.</div>
 		  </div>
 		</div>
 	</div>
@@ -173,4 +196,18 @@ $http.get("menu.html")
 </script>
 
 </body>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/587a3c4fcbe60101fde5597b/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 </html>
